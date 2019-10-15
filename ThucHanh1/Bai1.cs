@@ -43,11 +43,8 @@ namespace ThucHanh1
             {
                 ListViewItem itemFile = new ListViewItem(file.Remove(0, 3));
                 FileInfo fi = new FileInfo(file);
-                if (Path.HasExtension(file) && fi.Exists)
-                {
-                    ListViewItem.ListViewSubItem subFileSize = new ListViewItem.ListViewSubItem(itemFile, fi.Length.ToString());
-                    itemFile.SubItems.Add(subFileSize);
-                }
+                ListViewItem.ListViewSubItem subFileSize = new ListViewItem.ListViewSubItem(itemFile, (Path.HasExtension(file) && fi.Exists) ? fi.Length.ToString():"");
+                itemFile.SubItems.Add(subFileSize);
                 ListViewItem.ListViewSubItem subFileType = new ListViewItem.ListViewSubItem(itemFile, Path.HasExtension(file) ? Path.GetExtension(file).Remove(0, 1) + " File" : "File Folder");
                 itemFile.SubItems.Add(subFileType);
                 ListViewItem.ListViewSubItem subFileTime = new ListViewItem.ListViewSubItem(itemFile, File.GetLastWriteTime(file).ToString(CultureInfo.InvariantCulture));
