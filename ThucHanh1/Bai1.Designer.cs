@@ -31,6 +31,7 @@
             this.cmbDiskDrive = new System.Windows.Forms.ComboBox();
             this.cmbViewMode = new System.Windows.Forms.ComboBox();
             this.lvFileExplorer = new System.Windows.Forms.ListView();
+            this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.SuspendLayout();
             // 
             // cmbDiskDrive
@@ -56,15 +57,24 @@
             this.lvFileExplorer.HideSelection = false;
             this.lvFileExplorer.Location = new System.Drawing.Point(13, 51);
             this.lvFileExplorer.Name = "lvFileExplorer";
-            this.lvFileExplorer.Size = new System.Drawing.Size(775, 387);
+            this.lvFileExplorer.Size = new System.Drawing.Size(144, 15);
             this.lvFileExplorer.TabIndex = 1;
             this.lvFileExplorer.UseCompatibleStateImageBehavior = false;
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.Location = new System.Drawing.Point(13, 73);
+            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.Size = new System.Drawing.Size(775, 393);
+            this.webBrowser.TabIndex = 2;
             // 
             // Bai1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 509);
+            this.Controls.Add(this.webBrowser);
             this.Controls.Add(this.lvFileExplorer);
             this.Controls.Add(this.cmbViewMode);
             this.Controls.Add(this.cmbDiskDrive);
@@ -79,6 +89,7 @@
         private System.Windows.Forms.ComboBox cmbDiskDrive;
         private System.Windows.Forms.ComboBox cmbViewMode;
         private System.Windows.Forms.ListView lvFileExplorer;
+        private System.Windows.Forms.WebBrowser webBrowser;
     }
 }
 
