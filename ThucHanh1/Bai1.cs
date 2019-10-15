@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
@@ -18,7 +19,6 @@ namespace ThucHanh1
         private void LoadDataListView(string disk)
         {
             List<string> files = new List<string>();
-            ListViewItem fileName = new ListViewItem();
             //Add Column Header
             lvFileExplorer.Columns.Add("Name", 300);
             lvFileExplorer.Columns.Add("Size", 150);
@@ -41,9 +41,9 @@ namespace ThucHanh1
                 ListViewItem itemFile = new ListViewItem(file.Remove(0,3));
                 ListViewItem.ListViewSubItem  subFileSize = new ListViewItem.ListViewSubItem(itemFile,"200KB");
                 itemFile.SubItems.Add(subFileSize);
-                ListViewItem.ListViewSubItem subFileType = new ListViewItem.ListViewSubItem(itemFile,Path.GetExtension(file));
+                ListViewItem.ListViewSubItem subFileType = new ListViewItem.ListViewSubItem(itemFile,Path.HasExtension(file)? Path.GetExtension(file).Remove(0,1)+ " File":"File Folder");
                 itemFile.SubItems.Add(subFileType);
-                ListViewItem.ListViewSubItem subFileTime = new ListViewItem.ListViewSubItem(itemFile,File.GetLastWriteTime(file).ToString() );
+                ListViewItem.ListViewSubItem subFileTime = new ListViewItem.ListViewSubItem(itemFile,File.GetLastWriteTime(file).ToString(CultureInfo.InvariantCulture) );
                 itemFile.SubItems.Add(subFileTime);
                 lvFileExplorer.Items.Add(itemFile);
             }
