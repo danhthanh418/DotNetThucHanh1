@@ -39,11 +39,11 @@ namespace ThucHanh1
             foreach (var file in files)
             {
                 ListViewItem itemFile = new ListViewItem(file.Remove(0,3));
-                ListViewItem.ListViewSubItem  subFileSize = new ListViewItem.ListViewSubItem(itemFile,"2000KB");
+                ListViewItem.ListViewSubItem  subFileSize = new ListViewItem.ListViewSubItem(itemFile,"200KB");
                 itemFile.SubItems.Add(subFileSize);
                 ListViewItem.ListViewSubItem subFileType = new ListViewItem.ListViewSubItem(itemFile,Path.GetExtension(file));
                 itemFile.SubItems.Add(subFileType);
-                ListViewItem.ListViewSubItem subFileTime = new ListViewItem.ListViewSubItem(itemFile, DateTime.Now.ToString());
+                ListViewItem.ListViewSubItem subFileTime = new ListViewItem.ListViewSubItem(itemFile,File.GetLastWriteTime(file).ToString() );
                 itemFile.SubItems.Add(subFileTime);
                 lvFileExplorer.Items.Add(itemFile);
             }
@@ -89,31 +89,6 @@ namespace ThucHanh1
         {
             //lvFileExplorer.View = (View) cmbViewMode.SelectedIndex;
             lvFileExplorer.View = View.Details;
-        }
-    }
-    public class StringValue
-    {
-        public StringValue(string s)
-        {
-            _value = s;
-        }
-        public string Value { get { return _value; } set { _value = value; } }
-        string _value;
-    }
-
-    public class DetailType
-    {
-        private string _name;
-        private string _size;
-        private string _type;
-        private string _time;
-
-        public DetailType(string name,string size,string type, string time)
-        {
-            _name = name;
-            _size = size;
-            _type = type;
-            _time = time;
         }
     }
 }
