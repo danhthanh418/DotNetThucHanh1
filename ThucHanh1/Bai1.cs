@@ -43,7 +43,7 @@ namespace ThucHanh1
             {
                 ListViewItem itemFile = new ListViewItem(file.Remove(0, 3));
                 FileInfo fi = new FileInfo(file);
-                ListViewItem.ListViewSubItem subFileSize = new ListViewItem.ListViewSubItem(itemFile, (Path.HasExtension(file) && fi.Exists) ? fi.Length.ToString():"");
+                ListViewItem.ListViewSubItem subFileSize = new ListViewItem.ListViewSubItem(itemFile, (Path.HasExtension(file) && fi.Exists) ? FileSizeFormatter.FormatSize(fi.Length) : "");
                 itemFile.SubItems.Add(subFileSize);
                 ListViewItem.ListViewSubItem subFileType = new ListViewItem.ListViewSubItem(itemFile, Path.HasExtension(file) ? Path.GetExtension(file).Remove(0, 1) + " File" : "File Folder");
                 itemFile.SubItems.Add(subFileType);
@@ -94,6 +94,23 @@ namespace ThucHanh1
         {
             lvFileExplorer.View = (View)cmbViewMode.SelectedIndex;
             lvFileExplorer.View = View.Details;
+        }
+    }
+    public static class FileSizeFormatter
+    {
+        // Load all suffixes in an array  
+        static readonly string[] suffixes =
+            { "Bytes", "KB", "MB", "GB", "TB", "PB" };
+        public static string FormatSize(Int64 bytes)
+        {
+            int counter = 0;
+            decimal number = (decimal)bytes;
+            while (Math.Round(number / 1024) >= 1)
+            {
+                number = number / 1024;
+                counter++;
+            }
+            return string.Format("{0:n1}{1}", number, suffixes[counter]);
         }
     }
 }
