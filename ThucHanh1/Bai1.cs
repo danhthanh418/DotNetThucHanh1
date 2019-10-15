@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ThucHanh1
@@ -19,47 +13,49 @@ namespace ThucHanh1
             InitializeComponent();
             LoadDiskDrive();
             LoadViewMode();
-            LoadDataGirdView();
         }
 
-        private void LoadDataGirdView()
+        private void LoadDataListView(string disk)
         {
             List<string> files = new List<string>();
-            foreach (var fileInfor in Directory.GetFiles(@"E:\\"))
+            ListViewItem fileName = new ListViewItem();
+            foreach (var fileInfor in Directory.GetFiles(cmbDiskDrive.Text))
             {
-                files.Add(fileInfor.ToString().Remove(0,4));
+                files.Add(fileInfor.Remove(0,3));
             }
 
-            foreach (var folders in Directory.GetDirectories((@"E:\\"))) 
+            foreach (var folders in Directory.GetDirectories(disk)) 
             {
-               files.Add(folders.ToString().Remove(0, 4)); 
+               files.Add(folders.Remove(0, 3)); 
             }
-            //MessageBox.Show(cmbDiskDrive.Text);
 
-            //dgvFileExplorer.DataSource = files;
+            lvFileExplorer.Columns.Add("Name");
+            lvFileExplorer.Columns.Add("Size");
+            lvFileExplorer.Columns.Add("Type");
+            lvFileExplorer.Columns.Add("Time");
             foreach (var file in files)
             {
                 lvFileExplorer.Items.Add(file);
             }
 
-            SetViewMode(View.List);
+            lvFileExplorer.LabelEdit = true;
+            lvFileExplorer.AllowColumnReorder = true;
+            lvFileExplorer.CheckBoxes = false;
+            lvFileExplorer.FullRowSelect = true;
+            lvFileExplorer.GridLines = true;
+            lvFileExplorer.Sorting = SortOrder.Ascending;
         }
 
-        private void SetViewMode(object mode)
-        {
-            lvFileExplorer.View = (View) mode;
-        }
 
         private void LoadViewMode()
         {
-            cmbViewMode.Items.Add("Details");
-            cmbViewMode.Items.Add("Large Icon");
-            cmbViewMode.Items.Add("List");
-            cmbViewMode.Items.Add("Small Icon");
-            cmbViewMode.Items.Add("Tile");
+            cmbViewMode.Items.Add(View.Details);
+            cmbViewMode.Items.Add(View.LargeIcon);
+            cmbViewMode.Items.Add(View.List);
+            cmbViewMode.Items.Add(View.SmallIcon);
+            cmbViewMode.Items.Add(View.Tile);
             cmbViewMode.SelectedIndex = 0;
             cmbViewMode.DropDownStyle = ComboBoxStyle.DropDownList;
-            //MessageBox.Show(View.Details.ToString());
         }
 
         private void LoadDiskDrive()
@@ -75,32 +71,14 @@ namespace ThucHanh1
         private void cmbDiskDrive_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.cmbDiskDrive.Text = this.cmbDiskDrive.SelectedItem.ToString();
+            lvFileExplorer.Clear();
+            LoadDataListView(this.cmbDiskDrive.Text);
         }
-        //public static DataTable ToDataTable<T>( IList<T> data)
-        //{
-        //    PropertyDescriptorCollection props =
-        //        TypeDescriptor.GetProperties(typeof(T));
-        //    DataTable table = new DataTable();
-        //    for (int i = 0; i < props.Count; i++)
-        //    {
-        //        PropertyDescriptor prop = props[i];
-        //        table.Columns.Add(prop.Name, prop.PropertyType);
-        //    }
-        //    object[] values = new object[props.Count];
-        //    foreach (T item in data)
-        //    {
-        //        for (int i = 0; i < values.Length; i++)
-        //        {
-        //            values[i] = props[i].GetValue(item);
-        //        }
-        //        table.Rows.Add(values);
-        //    }
-        //    return table;
-        //}
 
         private void cmbViewMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SetViewMode(cmbViewMode.Text);
+            //lvFileExplorer.View = (View) cmbViewMode.SelectedIndex;
+            lvFileExplorer.View = View.Details;
         }
     }
     public class StringValue
