@@ -19,23 +19,33 @@ namespace ThucHanh1
         {
             List<string> files = new List<string>();
             ListViewItem fileName = new ListViewItem();
+            //Add Column Header
+            lvFileExplorer.Columns.Add("Name", 300);
+            lvFileExplorer.Columns.Add("Size", 150);
+            lvFileExplorer.Columns.Add("Type", 150);
+            lvFileExplorer.Columns.Add("Time", 150);
+            //Get diretory
             foreach (var fileInfor in Directory.GetFiles(cmbDiskDrive.Text))
             {
-                files.Add(fileInfor.Remove(0,3));
+                files.Add(fileInfor);
             }
 
             foreach (var folders in Directory.GetDirectories(disk)) 
             {
-               files.Add(folders.Remove(0, 3)); 
+               files.Add(folders); 
             }
+            //Add sub-item
 
-            lvFileExplorer.Columns.Add("Name");
-            lvFileExplorer.Columns.Add("Size");
-            lvFileExplorer.Columns.Add("Type");
-            lvFileExplorer.Columns.Add("Time");
             foreach (var file in files)
             {
-                lvFileExplorer.Items.Add(file);
+                ListViewItem itemFile = new ListViewItem(file.Remove(0,3));
+                ListViewItem.ListViewSubItem  subFileSize = new ListViewItem.ListViewSubItem(itemFile,"2000KB");
+                itemFile.SubItems.Add(subFileSize);
+                ListViewItem.ListViewSubItem subFileType = new ListViewItem.ListViewSubItem(itemFile,Path.GetExtension(file));
+                itemFile.SubItems.Add(subFileType);
+                ListViewItem.ListViewSubItem subFileTime = new ListViewItem.ListViewSubItem(itemFile, DateTime.Now.ToString());
+                itemFile.SubItems.Add(subFileTime);
+                lvFileExplorer.Items.Add(itemFile);
             }
 
             lvFileExplorer.LabelEdit = true;
@@ -89,5 +99,21 @@ namespace ThucHanh1
         }
         public string Value { get { return _value; } set { _value = value; } }
         string _value;
+    }
+
+    public class DetailType
+    {
+        private string _name;
+        private string _size;
+        private string _type;
+        private string _time;
+
+        public DetailType(string name,string size,string type, string time)
+        {
+            _name = name;
+            _size = size;
+            _type = type;
+            _time = time;
+        }
     }
 }
