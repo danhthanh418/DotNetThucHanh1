@@ -113,5 +113,11 @@
   <ItemGroup>
     <None Include="Resources\windows101.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NotepadCore\NotepadCore.csproj">
+      <Project>{31E52A97-01B0-4199-94FD-9AAB1AC3FC40}</Project>
+      <Name>NotepadCore</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

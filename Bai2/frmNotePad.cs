@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NotepadCore;
+using System;
 using System.Data;
 using System.Drawing.Printing;
 using System.Globalization;
@@ -9,9 +10,12 @@ namespace Bai2
 {
     public partial class FrmNotePad : Form
     {
+        private FileOperation fileOperation;
+
         public FrmNotePad()
         {
             InitializeComponent();
+            fileOperation = new FileOperation();
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -72,7 +76,18 @@ namespace Bai2
                 if (result == DialogResult.Yes)
                 {
                     SaveFileDialog saveFileDialog = new SaveFileDialog();
-                    saveFileDialog.ShowDialog();
+                    saveFileDialog.Filter = @"Text(*.txt)|*.txt";
+                    //saveFileDialog.CheckFileExists = true;
+                    saveFileDialog.DefaultExt = "txt";
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        Stream streamFile = saveFileDialog.OpenFile();
+                        StreamWriter streamWriter = new StreamWriter(streamFile);
+                        streamWriter.Write(txtEditor.Text);
+                        streamWriter.Close();
+                        streamFile.Close();
+                        this.Text = new FileInfo(saveFileDialog.FileName).Name;
+                    }
                 }
                 else
                 {
@@ -112,7 +127,19 @@ namespace Bai2
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = @"Text(*.txt)|*.txt";
+            //saveFileDialog.CheckFileExists = true;
+            saveFileDialog.DefaultExt = "txt";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                Stream streamFile = saveFileDialog.OpenFile();
+                StreamWriter streamWriter = new StreamWriter(streamFile);
+                streamWriter.Write(txtEditor.Text);
+                streamWriter.Close();
+                streamFile.Close();
+                this.Text = new FileInfo(saveFileDialog.FileName).Name;
+            }
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
