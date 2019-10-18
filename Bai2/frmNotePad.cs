@@ -12,6 +12,7 @@ namespace Bai2
     {
         private FileOperation fileOperation;
         private string fileNameFullPath;
+
         public FrmNotePad()
         {
             InitializeComponent();

@@ -70,6 +70,8 @@
     <Compile Include="FrmReplace.Designer.cs">
       <DependentUpon>FrmReplace.cs</DependentUpon>
     </Compile>
+    <Compile Include="Functions\FindNextResult.cs" />
+    <Compile Include="Functions\FindNextSearch.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmAbout.resx">
