@@ -11,7 +11,7 @@ namespace Bai2
     public partial class FrmNotePad : Form
     {
         private FileOperation fileOperation;
-
+        private string fileNameFullPath;
         public FrmNotePad()
         {
             InitializeComponent();
@@ -30,14 +30,15 @@ namespace Bai2
                     string fileText = File.ReadAllText(strFilename);
                     txtEditor.Text = fileText;
                     //Only get filename
-                    this.Text = openFileDialog.SafeFileName;
+                    this.Text  = openFileDialog.SafeFileName;
+                    fileNameFullPath = openFileDialog.FileName;
+                    myStream.Close();
                 }
             }
         }
 
         private void txtEditor_TextChanged(object sender, EventArgs e)
         {
-            this.Text = @"Untitled* - Notepad";
             UpdateStatus();
         }
 
@@ -127,6 +128,19 @@ namespace Bai2
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            using (Stream stream = File.Open(fileNameFullPath,FileMode.OpenOrCreate,FileAccess.Write))
+            {
+                using(StreamWriter sw= new StreamWriter(stream))
+                {
+                    sw.Write(txtEditor.Text);
+                    sw.Close();
+                    stream.Close();
+                }
+            }
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = @"Text(*.txt)|*.txt";
             //saveFileDialog.CheckFileExists = true;
@@ -140,11 +154,6 @@ namespace Bai2
                 streamFile.Close();
                 this.Text = new FileInfo(saveFileDialog.FileName).Name;
             }
-        }
-
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)

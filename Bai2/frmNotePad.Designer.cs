@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtEditor = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,20 +70,10 @@
             this.aboutNotepadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.txtEditor = new System.Windows.Forms.RichTextBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // txtEditor
-            // 
-            this.txtEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtEditor.Location = new System.Drawing.Point(0, 24);
-            this.txtEditor.Multiline = true;
-            this.txtEditor.Name = "txtEditor";
-            this.txtEditor.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtEditor.Size = new System.Drawing.Size(916, 426);
-            this.txtEditor.TabIndex = 0;
-            this.txtEditor.TextChanged += new System.EventHandler(this.txtEditor_TextChanged);
             // 
             // menuStrip1
             // 
@@ -436,13 +425,22 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(112, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel";
             // 
+            // txtEditor
+            // 
+            this.txtEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtEditor.Location = new System.Drawing.Point(0, 24);
+            this.txtEditor.Name = "txtEditor";
+            this.txtEditor.Size = new System.Drawing.Size(916, 404);
+            this.txtEditor.TabIndex = 3;
+            this.txtEditor.Text = "";
+            // 
             // FrmNotePad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(916, 450);
-            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.txtEditor);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FrmNotePad";
@@ -458,8 +456,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox txtEditor;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
@@ -502,6 +498,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutNotepadToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.RichTextBox txtEditor;
     }
 }
 
