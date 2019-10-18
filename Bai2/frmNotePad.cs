@@ -159,7 +159,7 @@ namespace Bai2
             {
                 using(StreamWriter sw= new StreamWriter(stream))
                 {
-                    sw.WriteLine(txtEditor.Text);
+                    sw.Write(txtEditor.Text);
                     sw.Close();
                     stream.Close();
                     MessageBox.Show(txtEditor.Text);
