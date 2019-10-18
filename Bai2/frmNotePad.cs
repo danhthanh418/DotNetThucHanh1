@@ -156,8 +156,9 @@ namespace Bai2
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (Stream stream = File.Open(!String.IsNullOrEmpty(fileNameFullPath) ? fileNameFullPath: Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+"\\Untitled.txt", FileMode.OpenOrCreate,FileAccess.Write))
+            using (Stream stream = File.Open(!String.IsNullOrEmpty(fileNameFullPath) ? fileNameFullPath: Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+"\\Untitled.txt", FileMode.Create,FileAccess.Write))
             {
+                //write overi
                 using(StreamWriter sw= new StreamWriter(stream))
                 {
                     sw.Write(txtEditor.Text);
