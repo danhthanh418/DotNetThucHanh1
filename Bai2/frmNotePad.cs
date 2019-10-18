@@ -123,18 +123,46 @@ namespace Bai2
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (txtEditor.Text.Length > 0)
+            {
+                DialogResult result = MessageBox.Show(@"Do you want to save changes to Untitled ?", @"Notepad", MessageBoxButtons.YesNoCancel);
+                if (result == DialogResult.Yes)
+                {
+                    SaveFileDialog saveFileDialog = new SaveFileDialog();
+                    saveFileDialog.Filter = @"Text(*.txt)|*.txt";
+                    //saveFileDialog.CheckFileExists = true;
+                    saveFileDialog.DefaultExt = "txt";
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        Stream streamFile = saveFileDialog.OpenFile();
+                        StreamWriter streamWriter = new StreamWriter(streamFile);
+                        streamWriter.Write(txtEditor.Text);
+                        streamWriter.Close();
+                        streamFile.Close();
+                        this.Text = new FileInfo(saveFileDialog.FileName).Name;
+                    }
+                }
+                else
+                {
+                    this.Close();
+                }
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (Stream stream = File.Open(fileNameFullPath,FileMode.OpenOrCreate,FileAccess.Write))
+            using (Stream stream = File.Open(!String.IsNullOrEmpty(fileNameFullPath) ? fileNameFullPath: Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+"\\Untitled.txt", FileMode.OpenOrCreate,FileAccess.Write))
             {
                 using(StreamWriter sw= new StreamWriter(stream))
                 {
-                    sw.Write(txtEditor.Text);
+                    sw.WriteLine(txtEditor.Text);
                     sw.Close();
                     stream.Close();
+                    MessageBox.Show(txtEditor.Text);
                 }
             }
         }
