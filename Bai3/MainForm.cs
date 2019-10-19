@@ -811,19 +811,19 @@ namespace Bai3
             {
                 if (fsObject is DirectoryInfo)
                 {
-                    message = "Не возможно переместить каталог";
+                    message = "It is not possible to move the directory";
                     ((DirectoryInfo)fsObject).MoveTo(newPath);
                 }
                 else
                 {
-                    message = "Не возможно переместить файл";
+                    message = "Unable to move file";
                     ((FileInfo)fsObject).MoveTo(newPath);
                 }
                 return true;
             }
             catch
             {
-                MessageBox.Show(message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(message, "Attention", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
         }

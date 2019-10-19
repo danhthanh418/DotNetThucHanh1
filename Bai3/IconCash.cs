@@ -13,21 +13,22 @@ using System.Diagnostics;
 namespace Bai3
 {
     /// <summary>
-    /// Класс для кэша иконок и работы со списками изображений ListView
+    /// Class for icon cache and work with image lists ListView
     /// </summary>
     class IconCache
     {
         private Dictionary<string, int> iconCashe = new Dictionary<string, int>();          //Словарь для хранения индексов иконок для расширений файлов (расширение => индекс в списке изображений ListView)
         private int reserveRange = 4;                                                       //Количество зарезервированных иконок в списке
 
+
         /// <summary>
-        /// Возращает индекс изображения в списке изображений ListView для расширения файла
+        /// Returns the index of the image in the ListView image list for file extension
         /// </summary>
-        /// <param name="extention">Расширение файла</param>
-        /// <returns>Индекс изображения или -1 если изображения нет</returns>
+        /// <param name = "extention"> File extension </param>
+        /// <returns> Image index or -1 if there is no image </returns>
         public int GetIconIndexByExtention(string extention)
         {
-            //to-do Вернуть индекс стандартной иконки для файлов без расширения
+            // to-do Return the index of the standard icon for files without extension
 
             List<string> extentions = iconCashe.Keys.ToList<string>();
             if (extention == null || extention.Length == 0 || extention == ".exe" || extentions.IndexOf(extention) == -1)
@@ -38,17 +39,17 @@ namespace Bai3
         }
 
         /// <summary>
-        /// Добавить иконку для типа файла в списки изображений ListView элемента и кеш иконок
+        /// Add an icon for the file type to the image lists of the ListView element and icon cache
         /// </summary>
-        /// <param name="file">Файл для которого добавляется иконка</param>
-        /// <param name="smallIconList">Список маленьких изображений</param>
-        /// <param name="largeIconList">Список больших изображений</param>
-        /// <returns>Индекс добавленного изображения в списках изображений</returns>
+        /// <param name = "file"> The file for which the icon is added </param>
+        /// <param name = "smallIconList"> List of small images </param>
+        /// <param name = "largeIconList"> List of large images </param>
+        /// <returns> Index of the added image in image lists </returns>
         public int AddIconForFile(FileInfo file, ImageList smallIconList, ImageList largeIconList)
         {
             string fileExtention = file.Extension.ToLower();
 
-            //Получаем иконку
+            // Get The Icon
 
             Icon fileIcon = Icon.ExtractAssociatedIcon(file.FullName);
             if (fileIcon == null)
@@ -56,30 +57,30 @@ namespace Bai3
                 return 0;
             }
 
-            //В списки
-
+            // To Lists
+     
             smallIconList.Images.Add(fileIcon);
             largeIconList.Images.Add(fileIcon);
 
-            //Кешируем иконки не для .exe файлов
+            // Cache Icons Not For .exe Files
 
             if (fileExtention != ".exe" && fileExtention.Length != 0)
             {
-                //Добавляем в конец
-
+                // Add To The End
                 iconCashe.Add(fileExtention, smallIconList.Images.Count - 1);
             }
-
-            //Вернули последний индекс
+           
+            // Return the last index
 
             return smallIconList.Images.Count - 1;
         }
 
+
         /// <summary>
-        /// Очистить кеш и список иконок
+        /// Clear cache and list of icons
         /// </summary>
-        /// <param name="smallIconList">Список изображений маленьких иконок</param>
-        /// <param name="largeIconList">Список изображений больших иконок</param>
+        /// <param name = "smallIconList"> List of images of small icons </param>
+        /// <param name = "largeIconList"> List of images of large icons </param>
         public void ClearIconCashAndLists(ImageList smallIconList, ImageList largeIconList)
         {
             iconCashe.Clear();

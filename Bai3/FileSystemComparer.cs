@@ -13,24 +13,23 @@ namespace Bai3
     {
         public enum SORTORDER { DESC, ASC };
 
-        public int columnIndex = 0;                     //Столбец, по которому выполняется сортирока
-        public SORTORDER sortOrder = SORTORDER.ASC;     //Направление сортировки
+        public int columnIndex = 0; // Column by which the sorting is performed
+        public SORTORDER sortOrder = SORTORDER.ASC; //Sorting direction
 
         public int Compare(object x, object y)
         {
-            //Получаем ссылки на объекты файловой системы
+
+            // Get links to file system objects
 
             FileSystemInfo firstFile = ((ListViewItem)x).Tag as FileSystemInfo;
             FileSystemInfo secondFile = ((ListViewItem)y).Tag as FileSystemInfo;
 
-            //Проверка
-
+            // Check
             if (firstFile == null || secondFile == null)
             {
                 return 0;
             }
-
-            //Папки больше файлов (находятся выше)
+            // Folders have more files (located above)
 
             if (firstFile is DirectoryInfo && secondFile is FileInfo)
             {
