@@ -1,6 +1,6 @@
-﻿using NotepadCore;
+﻿using Bai2.Functions;
 using System;
-using System.Data;
+using System.Drawing;
 using System.Drawing.Printing;
 using System.Globalization;
 using System.IO;
@@ -17,12 +17,13 @@ namespace Bai2
         {
             InitializeComponent();
             fileOperation = new FileOperation();
+            txtEditor.Font = new Font("Consolas", 12, FontStyle.Regular);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Stream myStream;
-            OpenFileDialog openFileDialog  = new OpenFileDialog();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 if ((myStream = openFileDialog.OpenFile()) != null)
@@ -31,7 +32,7 @@ namespace Bai2
                     string fileText = File.ReadAllText(strFilename);
                     txtEditor.Text = fileText;
                     //Only get filename
-                    this.Text  = openFileDialog.SafeFileName;
+                    this.Text = openFileDialog.SafeFileName;
                     fileNameFullPath = openFileDialog.FileName;
                     myStream.Close();
                 }
@@ -72,7 +73,7 @@ namespace Bai2
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (txtEditor.Text.Length >0)
+            if (txtEditor.Text.Length > 0)
             {
                 DialogResult result = MessageBox.Show(@"Do you want to save changes to Untitled ?", @"Notepad", MessageBoxButtons.YesNoCancel);
                 if (result == DialogResult.Yes)
@@ -93,8 +94,8 @@ namespace Bai2
                 }
                 else
                 {
-                   txtEditor.Clear();
-                   this.Text = @"Untitled - Notepad";
+                    txtEditor.Clear();
+                    this.Text = @"Untitled - Notepad";
                 }
             }
         }
@@ -107,7 +108,7 @@ namespace Bai2
 
         private void pageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PageSetupDialog pageSetupDialog  = new PageSetupDialog();
+            PageSetupDialog pageSetupDialog = new PageSetupDialog();
             pageSetupDialog.PageSettings = new PageSettings();
             pageSetupDialog.PrinterSettings = new PrinterSettings();
             pageSetupDialog.ShowNetwork = true;
@@ -119,7 +120,43 @@ namespace Bai2
 
         private void printToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            PrintDocument pd = new PrintDocument();
 
+            pd.DefaultPageSettings.Landscape = true;
+            pd.DocumentName = new FileInfo(fileNameFullPath).Name;
+            pd.OriginAtMargins = true;
+            pd.PrintPage += Pd_PrintPage;
+
+            pd.Print();
+        }
+
+        private void Pd_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            float availableWidth = (float)Math.Floor(((PrintDocument)sender).OriginAtMargins
+                                    ? e.MarginBounds.Width
+                                    : (e.PageSettings.Landscape
+                                        ? e.PageSettings.PrintableArea.Height
+                                        : e.PageSettings.PrintableArea.Width));
+            float availableHeight = (float)Math.Floor(((PrintDocument)sender).OriginAtMargins
+                                ? e.MarginBounds.Height
+                                : (e.PageSettings.Landscape
+                                    ? e.PageSettings.PrintableArea.Width
+                                    : e.PageSettings.PrintableArea.Height));
+
+            string printContent = string.Empty;
+            Font font = txtEditor.Font;
+            SizeF sizeF = e.Graphics.MeasureString(printContent, font, (int)availableWidth);
+            e.Graphics.DrawRectangle(new Pen(Color.Black, .5F), 0, 0, availableWidth - 2, availableHeight - 2);
+
+            printContent = txtEditor.Text;
+            font = txtEditor.Font;
+            sizeF = e.Graphics.MeasureString(printContent, font, (int)availableWidth);
+            e.Graphics.DrawString(printContent,
+                                     font,
+                                     new SolidBrush(Color.Black),
+                                     new RectangleF(new PointF(0.1F, 0.1F), sizeF)
+                                    //new StringFormat { Alignment = StringAlignment.Center }
+                                    );
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -156,10 +193,10 @@ namespace Bai2
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (Stream stream = File.Open(!String.IsNullOrEmpty(fileNameFullPath) ? fileNameFullPath: Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+"\\Untitled.txt", FileMode.Create,FileAccess.Write))
+            using (Stream stream = File.Open(!String.IsNullOrEmpty(fileNameFullPath) ? fileNameFullPath : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Untitled.txt", FileMode.Create, FileAccess.Write))
             {
                 //write overi
-                using(StreamWriter sw= new StreamWriter(stream))
+                using (StreamWriter sw = new StreamWriter(stream))
                 {
                     sw.Write(txtEditor.Text);
                     sw.Close();
@@ -259,7 +296,7 @@ namespace Bai2
         private void FrmNotePad_Load(object sender, EventArgs e)
         {
             this.Text = @"Untitled - Notepad";
-            toolStripStatusLabel1.Text = @"Ln 1"  + @",Col 1";
+            toolStripStatusLabel1.Text = @"Ln 1" + @",Col 1";
             txtEditor.WordWrap = wordWrapToolStripMenuItem.Checked;
         }
 

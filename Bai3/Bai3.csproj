@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A0F034FB-40FC-445A-941E-4885E84B64AA}</ProjectGuid>
+    <ProjectGuid>{1561D18B-8CE4-4845-917B-8D52DF90BE46}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Bai2</RootNamespace>
-    <AssemblyName>Bai2</AssemblyName>
+    <RootNamespace>Bai3</RootNamespace>
+    <AssemblyName>Bai3</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -46,61 +46,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmFind.cs">
+    <Compile Include="DragHelper.cs" />
+    <Compile Include="FileSystemComparer.cs" />
+    <Compile Include="Functions\FileSizeFormater.cs" />
+    <Compile Include="IconCash.cs" />
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmFind.Designer.cs">
-      <DependentUpon>FrmFind.cs</DependentUpon>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmNotePad.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmNotePad.Designer.cs">
-      <DependentUpon>FrmNotePad.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmAbout.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmAbout.Designer.cs">
-      <DependentUpon>FrmAbout.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmReplace.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmReplace.Designer.cs">
-      <DependentUpon>FrmReplace.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Functions\FileOperation.cs" />
-    <Compile Include="Functions\FindNextResult.cs" />
-    <Compile Include="Functions\FindNextSearch.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FrmAbout.resx">
-      <DependentUpon>FrmAbout.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmFind.resx">
-      <DependentUpon>FrmFind.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmNotePad.resx">
-      <DependentUpon>FrmNotePad.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmReplace.resx">
-      <DependentUpon>FrmReplace.cs</DependentUpon>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -109,12 +82,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\windows10.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\windows101.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
